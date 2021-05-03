@@ -3,7 +3,7 @@
 // 2. make npm init
 // 3. npm install express
 // 4. server started (required express, chose port,app.listen)
-// 5. View engines like EJS (based on js) are used , npm install ejs
+// 5. View engines like (install)EJS (based on js) are used , npm install ejs
 // 6. app.set to set view engines and views(for path)
 // 7. <%=%> and <%%> are used in home.ejs to use JS in html file
 // 8. Pass the data using a get route and res.render in controller function 
@@ -12,18 +12,18 @@
 // 12. Use databases, persitance storage, mongodb, mongoose robo3t
 
 const { request } = require('express')
-const express=require('express');
-const port=786;
-const path=require('path'); //inbuilt node module doesnt require installation
+const express = require('express');
+const port = 8080;
+const path = require('path'); //inbuilt node module doesnt require installation
 const { config } = require('process');
 
-const db=require('./config/mongoose');
-const Contact=require('./models/contact');
+const db = require('./config/mongoose');
+const Contact = require('./models/contact');
 
-const app=express();
+const app = express();
 
-app.set('view engine','ejs');
-app.set('views',path.join(__dirname,'views'));
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded()); //using a middleware
 
 app.use(express.static('assets'));
@@ -41,7 +41,7 @@ app.use(express.static('assets'));
 //     next();
 // });
 
-var contactList=[
+var contactList = [
     {
         name: "Arpan",
         phone: "123456"
@@ -56,35 +56,32 @@ var contactList=[
     }
 ]
 
-app.get('/',function(req,res)
-{
+app.get('/', function (req, res) {
     // console.log("from the get route controller",req.myName);
-    Contact.find({},function(error,contacts)
-    {
-        if(error)
-        {
+    Contact.find({}, function (error, contacts) {
+        if (error) {
             console.log('Error in fetching contacts from DB');
             return;
         }
-        return res.render('home',{
-            title: "Contact List" ,
+        return res.render('home', {
+            title: "Contact List",
             contact_list: contacts
-         });
+        });
     });
-    
+
 });
 // app.get('/',function(request,response)
 // {
-    
+
 //     return response.render('home',
 //         {
 //             title: 'Parser',
 //             contact_list: contacts
 //         });
-    
+
 // });
 
-app.post('/create-contact',function(request,response){
+app.post('/create-contact', function (request, response) {
     //WAY 1
     // contactList.push({
     //     name: request.body.name,
@@ -98,15 +95,14 @@ app.post('/create-contact',function(request,response){
 
     // NOW USING DATABASE
     Contact.create({
-        name:request.body.name,
+        name: request.body.name,
         phone: request.body.phone
-    },function(error,newContact){
-        if(error)
-        {
+    }, function (error, newContact) {
+        if (error) {
             console.log('Error in creating a contact');
             return;
         }
-        console.log('*********',newContact);
+        console.log('*********', newContact);
         return response.redirect('back');
     });
     // Now not needed 
@@ -124,23 +120,21 @@ app.post('/create-contact',function(request,response){
 // });
 
 // Using ?phone i.e. Query
-app.get('/delete-contact/',function(request,response)
-{
+app.get('/delete-contact/', function (request, response) {
     // USING DATABSES
     // get the id from query in url 
-    let id=request.query.id;
+    let id = request.query.id;
     // find the contact in DB using id 
-    Contact.findByIdAndDelete(id,function(error){
-        if(error)
-        {
+    Contact.findByIdAndDelete(id, function (error) {
+        if (error) {
             console.log('Error in deleting object from DB');
             return;
         }
         return response.redirect('back');
     });
 
-// Using Array nd not DB 
- //   // console.log(request.query.phone);
+    // Using Array nd not DB 
+    //   // console.log(request.query.phone);
     // let phone=request.query.phone;
 
     // let contactIndex=contactList.findIndex(contact=>contact.phone==phone);
@@ -153,13 +147,12 @@ app.get('/delete-contact/',function(request,response)
     // return response.redirect('back');
 });
 
-app.listen(port,function(error){
-    if(error)
-    {
+app.listen(port, function (error) {
+    if (error) {
         console.log("Check app.listen, problem running server. ", error);
     }
-    console.log("Server is up and running at port: ",port);
-}); 
+    console.log("Server is up and running at port: ", port);
+});
 
 //steps for making an ejs server & serving home.ejs
 // 1. install ejs
