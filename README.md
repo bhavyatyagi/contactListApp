@@ -8,7 +8,7 @@ This web-based application helps you remember and saves your contacts list in th
 For development, the tech-stack used are HTML5, CSS, javaScript, MongoDB and Node.js. 
 
 ## Screenshots
-![To Do List Home](https://i.ibb.co/PWr6WPN/contact-List.jpg)
+![Contact List Home](https://i.ibb.co/1X0mXPL/contact-List.jpg)
 
 ### Node
 - #### Node installation on Windows
